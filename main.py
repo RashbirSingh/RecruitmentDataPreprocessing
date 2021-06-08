@@ -118,12 +118,13 @@ def scrapeAcceptReject(tableName, counterLimit):
     result = response['Items']
     # TODO: Push the data to AWS DynamoDB
     batchKeeper= 0
+    counter = 0
     finaldata = pd.DataFrame()
 
     while 'LastEvaluatedKey' in response:
         logging.info('-------------Next Batch--------------')
         batchKeeper = batchKeeper + 1
-        counter = 0
+
 
         response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
         resultToProcess = response['Items']
