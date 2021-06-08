@@ -96,7 +96,9 @@ def scrape(tableName):
 
                 eachDataPoint["paragraphinformation"] = paragraphinformationText
                 for key, val in sectionalDic.items():
-                    eachDataPoint[key] = val
+                    for eachValCount in range(len(val)):
+                        category = JobAddFilter.categoryChecker(val[eachValCount], key, "keywords.csv")
+                        eachDataPoint[key+"_"+str(eachValCount)+"_"+category] = val[eachValCount]
 
                 logging.info('--------- PUSHING DATA ---------------' + str(eachDataPoint['Id']))
 
@@ -161,7 +163,9 @@ def scrapeAcceptReject(tableName, counterLimit):
 
                 eachDataPoint["paragraphinformation"] = paragraphinformationText
                 for key, val in sectionalDic.items():
-                    eachDataPoint[key] = val
+                    for eachValCount in range(len(val)):
+                        category = JobAddFilter.categoryChecker(val[eachValCount], key, "keywords.csv")
+                        eachDataPoint[key + "_" + str(eachValCount) + "_" + category] = val[eachValCount]
                 eachDataPoint["Decision"] = "Accepted"
 
                 logging.info('--------- PUSHING DATA ---------------' + str(eachDataPoint['Id']))
@@ -182,8 +186,9 @@ def scrapeAcceptReject(tableName, counterLimit):
 
 
 if __name__ == '__main__':
-    if str(sys.argv):
-        limit = int(str(sys.argv[-1]))
-    else:
-        limit = 10
-    scrapeAcceptReject('JobDataWrangle', limit)
+    # if str(sys.argv):
+    #     limit = int(str(sys.argv[-1]))
+    # else:
+    #     limit = 10
+    # scrapeAcceptReject('JobDataWrangle', limit)
+    scrape('JobDataWrangle')

@@ -1,6 +1,7 @@
 import logging
 import re
 import operator
+import pandas as pd
 
 
 class jobAddFilter:
@@ -133,3 +134,15 @@ class jobAddFilter:
     #     "Benefits": ["Benefits", "What you'll get", "We offer", "What's on offer", "Perks", "in it for you",
     #                  "What we are offering"]
     # }):
+
+    def categoryChecker(self, text, key, fileName):
+        keywordsDataFrame = pd.read_csv(fileName)
+        for keyword in keywordsDataFrame.Keywords.values:
+            if keyword.lower() in text.lower():
+                return(keywordsDataFrame.loc[keywordsDataFrame.Keywords == keyword,  "Categorisation"].values[0])
+            else:
+                if key == "Job Responsibilities":
+                    return "A"
+                elif key == "Benefits":
+                    return "I"
+                return("")
