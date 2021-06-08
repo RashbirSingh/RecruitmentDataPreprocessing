@@ -41,14 +41,18 @@ class jobAddFilter:
                                                  "Tasks",
                                                  "Duties", "What you’ll do", "Role", "The opportunity",
                                                  "The opportunity",
-                                                 "Key Activities"],
+                                                 "Key Activities", "Functions", "key priorities",
+                                                 "what you'll be doing",
+                                                 "accountabilities"],
                         "Skills & Experience": ["Skills", "Experience", "looking for", "About You", "Education",
                                                 "Ideal Candidate",
                                                 "Possess", "Successful", "Profile", "Requirements",
                                                 "success in the role", "Attributes",
                                                 "must have", "Who you are", "you will bring", "to be considered",
                                                 "Qualifications",
-                                                "License", "SELECTION CRITERIA"]
+                                                "License", "SELECTION CRITERIA", "following physical capabilities",
+                                                "Skill", "Physical Demands", "your background",
+                                                "what we need", "Qualification", "applicants must", "background"]
                     }):
         """
         counts the number of paragraphs in the text and return the count and list of identified paragraphs.
@@ -89,13 +93,21 @@ class jobAddFilter:
             return False
 
     def detectBullets(self, text, keywordDic={
-        "Job Responsibilities": ["Responsibilities", "Responsible", "Description", "Day-to-day", "Tasks",
-                                 "Duties", "What you’ll do", "Role", "The opportunity", "The opportunity",
-                                 "Key Activities"],
-        "Skills & Experience": ["Skills", "Experience", "looking for", "About You", "Education", "Ideal Candidate",
-                                "Possess", "Successful", "Profile", "Requirements", "success in the role", "Attributes",
-                                "must have", "Who you are", "you will bring", "to be considered", "Qualifications",
-                                "License", "SELECTION CRITERIA"],
+        "Job Responsibilities": ["Responsibilities", "Responsible", "Description", "Day-to-day",
+                                 "Tasks",
+                                 "Duties", "What you’ll do", "Role", "The opportunity",
+                                 "The opportunity",
+                                 "Key Activities", "Functions", "key priorities", "what you'll be doing",
+                                 "accountabilities"],
+        "Skills & Experience": ["Skills", "Experience", "looking for", "About You", "Education",
+                                "Ideal Candidate",
+                                "Possess", "Successful", "Profile", "Requirements",
+                                "success in the role", "Attributes",
+                                "must have", "Who you are", "you will bring", "to be considered",
+                                "Qualifications",
+                                "License", "SELECTION CRITERIA", "following physical capabilities",
+                                "Skill", "Physical Demands", "your background",
+                                "what we need", "Qualification", "applicants must", "background"],
         "Benefits": ["Benefits", "What you'll get", "We offer", "What's on offer", "Perks", "in it for you",
                      "What we are offering"]
     }):
@@ -139,10 +151,10 @@ class jobAddFilter:
         keywordsDataFrame = pd.read_csv(fileName)
         for keyword in keywordsDataFrame.Keywords.values:
             if keyword.lower() in text.lower():
-                return(keywordsDataFrame.loc[keywordsDataFrame.Keywords == keyword,  "Categorisation"].values[0])
+                return (keywordsDataFrame.loc[keywordsDataFrame.Keywords == keyword, "Categorisation"].values[0])
             else:
                 if key == "Job Responsibilities":
                     return "A"
                 elif key == "Benefits":
                     return "I"
-                return("")
+                return ("")
