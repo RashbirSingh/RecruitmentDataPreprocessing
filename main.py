@@ -6,6 +6,7 @@ from bulletFilter import bulletFilter
 import pandas as pd
 import logging
 from dotenv import dotenv_values
+import sys
 
 # nltk.download('punkt')
 config = dotenv_values(".env")
@@ -108,7 +109,7 @@ def scrape(tableName):
 
 
 
-def scrapeAcceptReject(tableName):
+def scrapeAcceptReject(tableName, counterLimit):
     dynamodb = boto3.resource('dynamodb', aws_access_key_id=os.getenv("aws_access_key_id"),
                               aws_secret_access_key=os.getenv("aws_secret_access_key"),
                               region_name=os.getenv("region_name"))
@@ -122,10 +123,20 @@ def scrapeAcceptReject(tableName):
     while 'LastEvaluatedKey' in response:
         logging.info('-------------Next Batch--------------')
         batchKeeper = batchKeeper + 1
+        counter = 0
 
         response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
         resultToProcess = response['Items']
         for eachDataPoint in resultToProcess:
+
+            ############################## Limiting the processing #############################
+            print(counter)
+            if counter == counterLimit: #Processing the top 50000+1 values
+                print("DONE PROCESSING")
+                sys.exit()
+            #####################################################################################
+
+
             paragraphinformationText = ""
             logging.info('-------------Processing Data Point--------------')
 
@@ -164,8 +175,10 @@ def scrapeAcceptReject(tableName):
 
                 # finaldata.to_csv("ProcessedData_Batch-" + str(batchKeeper) + ".csv")
 
+            counter = counter + 1 ## Updating the limit counter
+
             result.extend(eachDataPoint['JobAdText'])
 
 
 if __name__ == '__main__':
-    scrapeAcceptReject('JobDataWrangle')
+    scrapeAcceptReject('JobDataWrangle', 10)
