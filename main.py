@@ -108,6 +108,64 @@ def scrape(tableName):
 
 
 
+def scrapeAcceptReject(tableName):
+    dynamodb = boto3.resource('dynamodb', aws_access_key_id=os.getenv("aws_access_key_id"),
+                              aws_secret_access_key=os.getenv("aws_secret_access_key"),
+                              region_name=os.getenv("region_name"))
+    table = dynamodb.Table(tableName)
+    response = table.scan()
+    result = response['Items']
+    # TODO: Push the data to AWS DynamoDB
+    batchKeeper= 0
+    finaldata = pd.DataFrame()
+
+    while 'LastEvaluatedKey' in response:
+        logging.info('-------------Next Batch--------------')
+        batchKeeper = batchKeeper + 1
+
+        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+        resultToProcess = response['Items']
+        for eachDataPoint in resultToProcess:
+            paragraphinformationText = ""
+            logging.info('-------------Processing Data Point--------------')
+
+
+            if (JobAddFilter.NumberChar(eachDataPoint['JobAdText'])) & \
+                    (JobAddFilter.HasKeywords(eachDataPoint['JobAdText'])) & \
+                    (True in [True if len(value) > 1 else False for key, value in JobAddFilter.detectBullets(eachDataPoint['JobAdText']).items()]):
+
+                paragraphinformation = ParagraphFilters.countParagraph(eachDataPoint['JobAdText'])
+                if (paragraphinformation[0] >= 2) & (paragraphinformation[0] <= 4):
+                    paragraphinformationText = ParagraphFilters.ParagraphCharCountFilter(paragraphinformation[1])
+                    paragraphinformationText = ParagraphFilters.ParagraphSentCountFilter(paragraphinformationText)
+                    paragraphinformationText = ParagraphFilters.ParagraphEntityRecognister(paragraphinformationText)
+                    paragraphinformationText = ParagraphFilters.phoneNumberDetection(paragraphinformationText)
+                    paragraphinformationText = ParagraphFilters.emailDetection(paragraphinformationText)
+
+                sectionalDic = JobAddFilter.detectBullets(eachDataPoint['JobAdText'])
+                sectionalDic = BulletFilter.recordCharCounter(sectionalDic)
+                sectionalDic = BulletFilter.bulletEntityRecognister(sectionalDic)
+                sectionalDic = BulletFilter.removeDot(sectionalDic)
+
+                eachDataPoint["paragraphinformation"] = paragraphinformationText
+                for key, val in sectionalDic.items():
+                    eachDataPoint[key] = val
+                eachDataPoint["Decision"] = "Accepted"
+
+                logging.info('--------- PUSHING DATA ---------------' + str(eachDataPoint['Id']))
+
+                finaldata = finaldata.append(eachDataPoint, ignore_index=True)
+                finaldata.to_csv("ProcessedData_Batch.csv")
+
+            else:
+                eachDataPoint["Decision"] = "Rejected"
+                finaldata = finaldata.append(eachDataPoint, ignore_index=True)
+                finaldata.to_csv("ProcessedData_Batch.csv")
+
+                # finaldata.to_csv("ProcessedData_Batch-" + str(batchKeeper) + ".csv")
+
+            result.extend(eachDataPoint['JobAdText'])
+
 
 if __name__ == '__main__':
-    scrape('JobDataWrangle')
+    scrapeAcceptReject('JobDataWrangle')

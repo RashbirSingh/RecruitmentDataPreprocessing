@@ -77,7 +77,7 @@ class jobAddFilter:
         #         logging.info('HasKeywords(text) returned False')
         #         return False
         hasKeyword = True
-        for key, val in keywordDic:
+        for key, val in keywordDic.items():
             if (any(word in text for word in val)) & (hasKeyword):
                 hasKeyword = True
         if hasKeyword:
