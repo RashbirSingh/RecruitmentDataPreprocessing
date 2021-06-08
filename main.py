@@ -186,9 +186,9 @@ def scrapeAcceptReject(tableName, counterLimit):
 
 
 if __name__ == '__main__':
-    # if str(sys.argv):
-    #     limit = int(str(sys.argv[-1]))
-    # else:
-    #     limit = 10
-    # scrapeAcceptReject('JobDataWrangle', limit)
-    scrape('JobDataWrangle')
+    if str(sys.argv):
+        limit = int(str(sys.argv[-1]))
+    else:
+        limit = 10
+    scrapeAcceptReject('JobDataWrangle', limit)
+    # scrape('JobDataWrangle')
