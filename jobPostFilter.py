@@ -126,7 +126,7 @@ class jobAddFilter:
         for key, val in keywordDic.items():
             for keyword in val:
                 if len(text.lower().split(keyword.lower())) > 1:
-                    sectionalDic[key] = text.lower().split(keyword.lower())[-1]
+                    sectionalDic[key] = text.lower().split(keyword.lower())[-1].capitalize()
                     break
 
         countDict = {key: len(value) for key, value in sectionalDic.items()}
