@@ -7,6 +7,8 @@ import pandas as pd
 import logging
 from dotenv import dotenv_values
 import sys
+from datetime import datetime
+
 
 # nltk.download('punkt')
 config = dotenv_values(".env")
@@ -56,6 +58,10 @@ def truncateTable(tableName):
 
 
 def scrape(tableName):
+    # Track the start time
+    startTime = datetime.now()
+
+
     dynamodb = boto3.resource('dynamodb', aws_access_key_id=os.getenv("aws_access_key_id"),
                               aws_secret_access_key=os.getenv("aws_secret_access_key"),
                               region_name=os.getenv("region_name"))
@@ -108,10 +114,15 @@ def scrape(tableName):
                 # finaldata.to_csv("ProcessedData_Batch-" + str(batchKeeper) + ".csv")
 
             result.extend(eachDataPoint['JobAdText'])
+    datetime.now() - startTime
 
 
 
 def scrapeAcceptReject(tableName, counterLimit):
+    # Track the start time
+    startTime = datetime.now()
+
+
     dynamodb = boto3.resource('dynamodb', aws_access_key_id=os.getenv("aws_access_key_id"),
                               aws_secret_access_key=os.getenv("aws_secret_access_key"),
                               region_name=os.getenv("region_name"))
@@ -164,7 +175,7 @@ def scrapeAcceptReject(tableName, counterLimit):
                 eachDataPoint["paragraphinformation"] = paragraphinformationText
                 for key, val in sectionalDic.items():
                     for eachValCount in range(len(val)):
-                        category = JobAddFilter.categoryChecker(val[eachValCount], key, "keywords.csv")
+                        category = JobAddFilter.categoryChecker(val[eachValCount], key)
                         eachDataPoint[key + "_" + str(eachValCount) + "_" + category] = val[eachValCount]
                 eachDataPoint["Decision"] = "Accepted"
 
@@ -183,12 +194,13 @@ def scrapeAcceptReject(tableName, counterLimit):
             counter = counter + 1 ## Updating the limit counter
 
             result.extend(eachDataPoint['JobAdText'])
+    datetime.now() - startTime
 
 
 if __name__ == '__main__':
     if str(sys.argv):
         limit = int(str(sys.argv[-1]))
     else:
-        limit = 10
+        limit = 10000
     scrapeAcceptReject('JobDataWrangle', limit)
     # scrape('JobDataWrangle')

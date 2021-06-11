@@ -12,15 +12,17 @@ class bulletFilter:
                           sectionalDic,
                           lowerLimit = 30,
                           upperLimit = 170):
+        # TODO add the doc string for this function
         for key, val in sectionalDic.items():
             valulist = list()
             for eachVal in range(len(val)):
-                if (len(val[eachVal]) > lowerLimit) & (len(val[eachVal]) <= upperLimit):
+                if (len(val[eachVal]) >= lowerLimit) & (len(val[eachVal]) <= upperLimit):
                     valulist.append(val[eachVal])
                 sectionalDic[key] = valulist
         return sectionalDic
 
     def bulletEntityRecognister(self, sectionalDic, entityName: str = 'ORG'):
+        # TODO add the doc string for this function
         for key, val in sectionalDic.items():
             valulist = list()
             for eachVal in range(len(val)):
@@ -32,6 +34,7 @@ class bulletFilter:
 
 
     def removeDot(self, sectionalDic):
+        # TODO add the doc string for this function
         for key, val in sectionalDic.items():
             for eachVal in range(len(val)):
                 val[eachVal] == val[eachVal].strip(".")

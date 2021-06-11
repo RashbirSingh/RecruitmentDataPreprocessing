@@ -60,7 +60,7 @@ class paragraphFilters:
 
         logging.info('Counting number of characters in a paragraph')
         for para in ListOfTextParagraph:
-            if (len(para) > 400 & len(para) <= 2000) == False:
+            if (len(para) >= 400 & len(para) <= 2000) == False:
                 ListOfTextParagraph.remove(para)
         return ListOfTextParagraph
 
