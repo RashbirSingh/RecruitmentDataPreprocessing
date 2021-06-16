@@ -11,7 +11,7 @@ class jobAddFilter:
 
     def NumberChar(self, text,
                    lowerLimit=400,
-                   upperLimit=3000):
+                   upperLimit=4000):
         """
         counts the number of paragraphs in the text and return the count and list of identified paragraphs.
         ...
@@ -49,7 +49,7 @@ class jobAddFilter:
                                                 "Possess", "Successful", "Profile", "Requirements",
                                                 "success in the role", "Attributes",
                                                 "must have", "Who you are", "you will bring", "to be considered",
-                                                "Qualifications",
+                                                "Qualifications","Qualified candidates will have",
                                                 "License", "SELECTION CRITERIA", "following physical capabilities",
                                                 "Skill", "Physical Demands", "your background",
                                                 "what we need", "Qualification", "applicants must", "background"]
@@ -76,7 +76,7 @@ class jobAddFilter:
 
         hasKeyword = True
         for key, val in keywordDic.items():
-            if (any(word in text for word in val)) & (hasKeyword):
+            if (any(word.lower() in text.lower() for word in val)) & (hasKeyword):
                 hasKeyword = True
         if hasKeyword:
             logging.info('HasKeywords(text) returned True')
@@ -97,7 +97,7 @@ class jobAddFilter:
                                 "Possess", "Successful", "Profile", "Requirements",
                                 "success in the role", "Attributes",
                                 "must have", "Who you are", "you will bring", "to be considered",
-                                "Qualifications",
+                                "Qualifications","Qualified candidates will have",
                                 "License", "SELECTION CRITERIA", "following physical capabilities",
                                 "Skill", "Physical Demands", "your background",
                                 "what we need", "Qualification", "applicants must", "background"],
@@ -105,7 +105,7 @@ class jobAddFilter:
                      "What we are offering"]
     }):
 
-#TODO add the doc string for this function
+        # TODO add the doc string for this function
         """
         counts the number of paragraphs in the text and return the count and list of identified paragraphs.
         ...
@@ -143,7 +143,7 @@ class jobAddFilter:
 
         return sectionalDic
 
-    def categoryChecker(self, text, key, fileName = "keywords.csv"):
+    def categoryChecker(self, text, key, fileName="keywords.csv"):
 
         """
         Based on the CSV fileName "keywords.csv" it assigns the category to each sentence.
@@ -175,3 +175,29 @@ class jobAddFilter:
                 elif key == "Benefits":
                     return "I"
                 return ("")
+
+
+    def removeIntroduction(self, text, keywords=["Responsibilities", "Responsible", "Description", "Day-to-day",
+                                                 "Tasks",
+                                                 "Duties", "What you’ll do", "Role", "The opportunity",
+                                                 "The opportunity",
+                                                 "Key Activities", "Functions", "key priorities",
+                                                 "what you'll be doing",
+                                                 "accountabilities", "Skills", "Experience", "looking for", "About You",
+                                                 "Education",
+                                                 "Ideal Candidate",
+                                                 "Possess", "Successful", "Profile", "Requirements",
+                                                 "success in the role", "Attributes",
+                                                 "must have", "Who you are", "you will bring", "to be considered",
+                                                 "Qualifications","Qualified candidates will have",
+                                                 "License", "SELECTION CRITERIA", "following physical capabilities",
+                                                 "Skill", "Physical Demands", "your background",
+                                                 "what we need", "Qualification", "applicants must", "background",
+                                                 "Benefits", "What you'll get", "We offer", "What's on offer", "Perks",
+                                                 "in it for you",
+                                                 "What we are offering"]):
+
+        for keyword in keywords:
+            splittext = text.lower().split(keyword.lower())
+            if len(splittext) > 1:
+                return splittext[-1]

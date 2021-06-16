@@ -87,6 +87,9 @@ def scrape(tableName):
                     (JobAddFilter.HasKeywords(eachDataPoint['JobAdText'])) & \
                     (True in [True if len(value) > 1 else False for key, value in JobAddFilter.detectBullets(eachDataPoint['JobAdText']).items()]):
 
+                if (JobAddFilter.NumberChar(eachDataPoint['JobAdText'], 3000, 4000)):
+                    eachDataPoint['JobAdText'] = JobAddFilter.removeIntroduction(eachDataPoint['JobAdText'])
+
                 paragraphinformation = ParagraphFilters.countParagraph(eachDataPoint['JobAdText'])
                 if (paragraphinformation[0] >= 2) & (paragraphinformation[0] <= 4):
                     paragraphinformationText = ParagraphFilters.ParagraphCharCountFilter(paragraphinformation[1])
@@ -99,6 +102,7 @@ def scrape(tableName):
                 sectionalDic = BulletFilter.recordCharCounter(sectionalDic)
                 sectionalDic = BulletFilter.bulletEntityRecognister(sectionalDic)
                 sectionalDic = BulletFilter.removeDot(sectionalDic)
+                sectionalDic = BulletFilter.bulletDropEmailAndWebsite(sectionalDic)
 
                 eachDataPoint["paragraphinformation"] = paragraphinformationText
                 for key, val in sectionalDic.items():
@@ -109,6 +113,7 @@ def scrape(tableName):
                 logging.info('--------- PUSHING DATA ---------------' + str(eachDataPoint['Id']))
 
                 finaldata = finaldata.append(eachDataPoint, ignore_index=True)
+                finaldata = finaldata.reindex(sorted(finaldata.columns), axis=1)
                 finaldata.to_csv("ProcessedData_Batch.csv")
 
                 # finaldata.to_csv("ProcessedData_Batch-" + str(batchKeeper) + ".csv")
@@ -159,6 +164,9 @@ def scrapeAcceptReject(tableName, counterLimit):
                     (JobAddFilter.HasKeywords(eachDataPoint['JobAdText'])) & \
                     (True in [True if len(value) > 1 else False for key, value in JobAddFilter.detectBullets(eachDataPoint['JobAdText']).items()]):
 
+                if (JobAddFilter.NumberChar(eachDataPoint['JobAdText'], 3000, 4000)):
+                    eachDataPoint['JobAdText'] = JobAddFilter.removeIntroduction(eachDataPoint['JobAdText'])
+
                 paragraphinformation = ParagraphFilters.countParagraph(eachDataPoint['JobAdText'])
                 if (paragraphinformation[0] >= 2) & (paragraphinformation[0] <= 4):
                     paragraphinformationText = ParagraphFilters.ParagraphCharCountFilter(paragraphinformation[1])
@@ -171,6 +179,7 @@ def scrapeAcceptReject(tableName, counterLimit):
                 sectionalDic = BulletFilter.recordCharCounter(sectionalDic)
                 sectionalDic = BulletFilter.bulletEntityRecognister(sectionalDic)
                 sectionalDic = BulletFilter.removeDot(sectionalDic)
+                sectionalDic = BulletFilter.bulletDropEmailAndWebsite(sectionalDic)
 
                 eachDataPoint["paragraphinformation"] = paragraphinformationText
                 for key, val in sectionalDic.items():
@@ -182,11 +191,13 @@ def scrapeAcceptReject(tableName, counterLimit):
                 logging.info('--------- PUSHING DATA ---------------' + str(eachDataPoint['Id']))
 
                 finaldata = finaldata.append(eachDataPoint, ignore_index=True)
+                finaldata = finaldata.reindex(sorted(finaldata.columns), axis=1)
                 finaldata.to_csv("ProcessedData_Batch.csv")
 
             else:
                 eachDataPoint["Decision"] = "Rejected"
                 finaldata = finaldata.append(eachDataPoint, ignore_index=True)
+                finaldata = finaldata.reindex(sorted(finaldata.columns), axis=1)
                 finaldata.to_csv("ProcessedData_Batch.csv")
 
                 # finaldata.to_csv("ProcessedData_Batch-" + str(batchKeeper) + ".csv")

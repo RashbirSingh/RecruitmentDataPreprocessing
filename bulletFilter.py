@@ -1,6 +1,7 @@
 import logging
 import spacy
 import en_core_web_trf
+import re
 
 class bulletFilter:
 
@@ -38,4 +39,15 @@ class bulletFilter:
         for key, val in sectionalDic.items():
             for eachVal in range(len(val)):
                 val[eachVal] == val[eachVal].strip(".")
+        return sectionalDic
+
+    def bulletDropEmailAndWebsite(self, sectionalDic):
+        # TODO add the doc string for this function
+        for key, val in sectionalDic.items():
+            valulist = list()
+            for eachVal in range(len(val)):
+                if (re.match("((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*", val[eachVal]) == False) & \
+                        (re.match("@" , val[eachVal]) == False):
+                    valulist.append(val[eachVal])
+                sectionalDic[key] = valulist
         return sectionalDic
