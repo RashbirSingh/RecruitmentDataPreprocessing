@@ -19,7 +19,7 @@ class bulletFilter:
             for eachVal in range(len(val)):
                 if (len(val[eachVal]) >= lowerLimit) & (len(val[eachVal]) <= upperLimit):
                     valulist.append(val[eachVal])
-                sectionalDic[key] = valulist
+            sectionalDic[key] = valulist
         return sectionalDic
 
     def bulletEntityRecognister(self, sectionalDic, entityName: str = 'ORG'):
@@ -30,7 +30,7 @@ class bulletFilter:
                 doc = self.nlp(val[eachVal])
                 if entityName not in [entity.label_ for entity in doc.ents]:
                     valulist.append(val[eachVal])
-                sectionalDic[key] = valulist
+            sectionalDic[key] = valulist
         return sectionalDic
 
 
@@ -46,8 +46,21 @@ class bulletFilter:
         for key, val in sectionalDic.items():
             valulist = list()
             for eachVal in range(len(val)):
-                if (re.match("((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*", val[eachVal]) == False) & \
-                        (re.match("@" , val[eachVal]) == False):
+                if len(FindWebsite(val[eachVal])) < 1 & (FindEmail(val[eachVal]) == False):
                     valulist.append(val[eachVal])
-                sectionalDic[key] = valulist
+            sectionalDic[key] = valulist
         return sectionalDic
+
+def FindWebsite(string):
+    # findall() has been used
+    # with valid conditions for urls in string
+    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+    url = re.findall(regex, string)
+    return [x[0] for x in url]
+
+def FindEmail(string):
+    emailaddressregex = "[\w\.-]+@[\w\.-]+"
+    if re.search(emailaddressregex, string):
+        return True
+    else:
+        return False

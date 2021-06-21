@@ -99,10 +99,10 @@ def scrape(tableName):
                     paragraphinformationText = ParagraphFilters.emailDetection(paragraphinformationText)
 
                 sectionalDic = JobAddFilter.detectBullets(eachDataPoint['JobAdText'])
-                sectionalDic = BulletFilter.recordCharCounter(sectionalDic)
-                sectionalDic = BulletFilter.bulletEntityRecognister(sectionalDic)
-                sectionalDic = BulletFilter.removeDot(sectionalDic)
-                sectionalDic = BulletFilter.bulletDropEmailAndWebsite(sectionalDic)
+                # sectionalDic = BulletFilter.recordCharCounter(sectionalDic)
+                # sectionalDic = BulletFilter.bulletEntityRecognister(sectionalDic)
+                # sectionalDic = BulletFilter.removeDot(sectionalDic)
+                # sectionalDic = BulletFilter.bulletDropEmailAndWebsite(sectionalDic)
 
                 eachDataPoint["paragraphinformation"] = paragraphinformationText
                 for key, val in sectionalDic.items():
@@ -182,11 +182,21 @@ def scrapeAcceptReject(tableName, counterLimit):
                 sectionalDic = BulletFilter.bulletDropEmailAndWebsite(sectionalDic)
 
                 eachDataPoint["paragraphinformation"] = paragraphinformationText
+                # print(sectionalDic.keys())
                 for key, val in sectionalDic.items():
-                    for eachValCount in range(len(val)):
-                        category = JobAddFilter.categoryChecker(val[eachValCount], key)
-                        eachDataPoint[key + "_" + str(eachValCount) + "_" + category] = val[eachValCount]
-                eachDataPoint["Decision"] = "Accepted"
+                    eachDataPoint[key] = val
+
+                if ("Job Responsibilities" in eachDataPoint.keys()) and ("Skills & Experience" in eachDataPoint.keys()):
+                    if (len(eachDataPoint["Job Responsibilities"]) > 0) or (len(eachDataPoint["Skills & Experience"]) > 0):
+                        eachDataPoint["Decision"] = "Accepted"
+                        for eachValCount in range(len(val)):
+                            category = JobAddFilter.categoryChecker(val[eachValCount], key)
+                            eachDataPoint[key + "_" + str(eachValCount) + "_" + category] = val[eachValCount]
+                            # eachDataPoint[key + "_" + str(eachValCount)] = val[eachValCount]
+                    else:
+                        eachDataPoint["Decision"] = "Rejected"
+                else:
+                    eachDataPoint["Decision"] = "Rejected"
 
                 logging.info('--------- PUSHING DATA ---------------' + str(eachDataPoint['Id']))
 
