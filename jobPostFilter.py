@@ -35,7 +35,6 @@ class jobAddFilter:
             logging.info('NumberChar(text) returned False')
             return False
 
-
     def HasKeywords(self, text):
         sectionaDict = self.detectBullets(text)
         if ("Job Responsibilities" in sectionaDict.keys()) and ("Skills & Experience" in sectionaDict.keys()):
@@ -103,13 +102,14 @@ class jobAddFilter:
                                   "Key Activities", "key priorities", "what you'll be doing", "Key Duties"]],
         "Skills & Experience": [["Qualifications", "Skills", "Experience", "Education", "Profile",
                                  "Requirements", "background", "Possess", "License",
-                                  "Qualification", "Skill", "Attributes"],
+                                 "Qualification", "Skill", "Attributes"],
                                 ["Ideal Candidate", "success in the role", "must have", "Who you are", "you will bring",
-                                 "to be considered","looking for:", "looking for\n", "About You",
+                                 "to be considered", "looking for:", "looking for\n", "About You",
                                  "Qualified candidates will have", "SELECTION CRITERIA",
                                  "following physical capabilities",
                                  "Physical Demands", "your background",
-                                 "what we need", "applicants must", "Skills and experience", "What You Need To Succeed"]],
+                                 "what we need", "applicants must", "Skills and experience",
+                                 "What You Need To Succeed"]],
         "Benefits": [["Benefits"],
                      ["What you'll get", "We offer", "What's on offer", "Perks", "in it for you",
                       "What we are offering"]]
@@ -138,20 +138,20 @@ class jobAddFilter:
         for key, val in keywordDic.items():
             for keyword in val[1]:
                 if len(text.lower().split(keyword.lower())) > 1:
-                    print("(2)Splitting on: " + key + "-" + keyword)
+                    # print("(2)Splitting on: " + key + "-" + keyword)
                     sectionalDic[key] = text.lower().split(keyword.lower())[-1]
                     found = True
                     break
             for textchar in text.split():
                 if (textchar.lower().strip(":") in [valu.lower() for valu in val[0]]) and (found != True):
-                    print("(1)Splitting on: " + key + "-" + textchar)
+                    # print("(1)Splitting on: " + key + "-" + textchar)
                     sectionalDic[key] = text.lower().split(textchar.lower())[-1]
                     break
 
         countDict = {key: len(value) for key, value in sectionalDic.items()}
         orderedset = sorted(countDict.items(), key=operator.itemgetter(1), reverse=True)
         for key, val in sectionalDic.items():
-            sectionalDic[key] = re.split('\n|\.|:', val)
+            sectionalDic[key] = re.split('\n|\.|:|;', val)
         if len(orderedset) > 1:
             for orderSetCount in range(len(orderedset)):
                 if orderSetCount + 1 < len(orderedset):
@@ -160,7 +160,12 @@ class jobAddFilter:
                             sectionalDic[orderedset[orderSetCount][0]]))
 
         for key, val in sectionalDic.items():
-            sectionalDic[key] = [eachVal.strip("•").strip().capitalize() for eachVal in val]
+            sectionalDic[key] = [eachVal.strip("•")
+                                     .strip("'*")
+                                     .strip("·")
+                                     .strip('·')
+                                     .strip('!')
+                                     .strip().capitalize() for eachVal in val]
 
         return sectionalDic
 

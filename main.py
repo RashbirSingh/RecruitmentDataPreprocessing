@@ -180,6 +180,10 @@ def scrapeAcceptReject(tableName, counterLimit):
                 sectionalDic = BulletFilter.bulletEntityRecognister(sectionalDic)
                 sectionalDic = BulletFilter.removeDot(sectionalDic)
                 sectionalDic = BulletFilter.bulletDropEmailAndWebsite(sectionalDic)
+                sectionalDic = BulletFilter.removeSpecialChar(sectionalDic)
+                sectionalDic = BulletFilter.isQuestion(sectionalDic)
+                sectionalDic = BulletFilter.hasPhoneNumber(sectionalDic)
+                sectionalDic = BulletFilter.otherCleaning(sectionalDic)
 
                 eachDataPoint["paragraphinformation"] = paragraphinformationText
                 # print(sectionalDic.keys())
@@ -189,9 +193,9 @@ def scrapeAcceptReject(tableName, counterLimit):
                 if ("Job Responsibilities" in eachDataPoint.keys()) and ("Skills & Experience" in eachDataPoint.keys()):
                     if (len(eachDataPoint["Job Responsibilities"]) > 0) or (len(eachDataPoint["Skills & Experience"]) > 0):
                         eachDataPoint["Decision"] = "Accepted"
-                        for eachValCount in range(len(val)):
-                            category = JobAddFilter.categoryChecker(val[eachValCount], key)
-                            eachDataPoint[key + "_" + str(eachValCount) + "_" + category] = val[eachValCount]
+                        # for eachValCount in range(len(val)):
+                        #     category = JobAddFilter.categoryChecker(val[eachValCount], key)
+                        #     eachDataPoint[key + "_" + str(eachValCount) + "_" + category] = val[eachValCount]
                             # eachDataPoint[key + "_" + str(eachValCount)] = val[eachValCount]
                     else:
                         eachDataPoint["Decision"] = "Rejected"
