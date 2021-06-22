@@ -38,7 +38,7 @@ class bulletFilter:
         # TODO add the doc string for this function
         for key, val in sectionalDic.items():
             for eachVal in range(len(val)):
-                val[eachVal] == val[eachVal].strip(".")
+                val[eachVal] = val[eachVal].strip(".")
         return sectionalDic
 
     def bulletDropEmailAndWebsite(self, sectionalDic):
