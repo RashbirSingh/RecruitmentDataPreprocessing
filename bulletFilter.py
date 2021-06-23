@@ -12,8 +12,8 @@ class bulletFilter:
 
     def recordCharCounter(self,
                           sectionalDic,
-                          lowerLimit=30,
-                          upperLimit=170):
+                          lowerLimit=20,
+                          upperLimit=200):
         # TODO add the doc string for this function
         for key, val in sectionalDic.items():
             valulist = list()

@@ -11,7 +11,7 @@ class jobAddFilter:
 
     def NumberChar(self, text,
                    lowerLimit=400,
-                   upperLimit=4000):
+                   upperLimit=5000):
         """
         counts the number of paragraphs in the text and return the count and list of identified paragraphs.
         ...
@@ -100,7 +100,7 @@ class jobAddFilter:
                                   "Tasks", "Duties", "Functions", "accountabilities"],
                                  ["What you’ll do", "The opportunity",
                                   "Key Activities", "key priorities", "what you'll be doing", "Key Duties",
-                                  "Day to day"]],
+                                  "Day to day", "About the role", "the role", "day in the life", "We’re looking for"]],
         "Skills & Experience": [["Qualifications", "Skills", "Experience", "Education", "Profile",
                                  "Requirements", "background", "Possess", "License",
                                  "Qualification", "Skill", "Attributes"],
@@ -110,10 +110,12 @@ class jobAddFilter:
                                  "following physical capabilities",
                                  "Physical Demands", "your background",
                                  "what we need", "applicants must", "Skills and experience",
-                                 "What You Need To Succeed"]],
+                                 "What You Need To Succeed", "To be considered", "Experience / Requirements",
+                                 "Desirable skills", "right person", "You must currently have", "must currently have",
+                                 "currently have", "Qualification/Skills"]],
         "Benefits": [["Benefits"],
                      ["What you'll get", "We offer", "What's on offer", "Perks", "in it for you",
-                      "What we are offering"]]
+                      "What we are offering", "We’re offering", "we are offering"]]
     }):
 
         # TODO add the doc string for this function
@@ -204,26 +206,30 @@ class jobAddFilter:
                 return ("")
 
     def removeIntroduction(self, text, keywords=["Responsibilities", "Responsible", "Description", "Day-to-day",
-                                                 "Tasks",
-                                                 "Duties", "What you’ll do", "Role", "The opportunity",
-                                                 "The opportunity",
-                                                 "Key Activities", "Functions", "key priorities",
-                                                 "what you'll be doing",
-                                                 "accountabilities", "Skills", "Experience", "looking for", "About You",
-                                                 "Education", "Key Duties",
-                                                 "Ideal Candidate",
-                                                 "Possess", "Successful", "Profile", "Requirements",
-                                                 "success in the role", "Attributes",
-                                                 "must have", "Who you are", "you will bring", "to be considered",
-                                                 "Qualifications", "Qualified candidates will have",
-                                                 "License", "SELECTION CRITERIA", "following physical capabilities",
-                                                 "Skill", "Physical Demands", "your background",
-                                                 "what we need", "Qualification", "applicants must", "background",
-                                                 "Benefits", "What you'll get", "We offer", "What's on offer", "Perks",
-                                                 "in it for you",
-                                                 "What we are offering"]):
+                                                 "Tasks", "Duties", "Functions", "accountabilities",
+                                                 "What you’ll do", "The opportunity",
+                                                 "Key Activities", "key priorities", "what you'll be doing",
+                                                 "Key Duties",
+                                                 "Day to day", "About the role", "the role", "day in the life",
+                                                 "We’re looking for",
+                                                 "Qualifications", "Skills", "Experience", "Education", "Profile",
+                                                 "Requirements", "background", "Possess", "License",
+                                                 "Qualification", "Skill", "Attributes",
+                                                 "Ideal Candidate", "success in the role", "must have", "Who you are",
+                                                 "you will bring",
+                                                 "to be considered", "looking for:", "looking for\n", "About You",
+                                                 "looking for",
+                                                 "Qualified candidates will have", "SELECTION CRITERIA",
+                                                 "following physical capabilities",
+                                                 "Physical Demands", "your background",
+                                                 "what we need", "applicants must", "Skills and experience",
+                                                 "What You Need To Succeed", "To be considered",
+                                                 "Experience / Requirements",
+                                                 "Desirable skills", "right person", "You must currently have",
+                                                 "must currently have",
+                                                 "currently have", "Qualification/Skills"]):
 
         for keyword in keywords:
             splittext = text.lower().split(keyword.lower())
-            if len(splittext) > 1:
-                return splittext[-1]
+        if len(splittext) > 1:
+            return splittext[-1]

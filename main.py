@@ -164,7 +164,7 @@ def scrapeAcceptReject(tableName, counterLimit):
                     (JobAddFilter.HasKeywords(eachDataPoint['JobAdText'])) & \
                     (True in [True if len(value) > 1 else False for key, value in JobAddFilter.detectBullets(eachDataPoint['JobAdText']).items()]):
 
-                if (JobAddFilter.NumberChar(eachDataPoint['JobAdText'], 3000, 4000)):
+                if (JobAddFilter.NumberChar(eachDataPoint['JobAdText'], 4000, 5000)):
                     eachDataPoint['JobAdText'] = JobAddFilter.removeIntroduction(eachDataPoint['JobAdText'])
 
                 paragraphinformation = ParagraphFilters.countParagraph(eachDataPoint['JobAdText'])
@@ -198,9 +198,15 @@ def scrapeAcceptReject(tableName, counterLimit):
                         #     eachDataPoint[key + "_" + str(eachValCount) + "_" + category] = val[eachValCount]
                             # eachDataPoint[key + "_" + str(eachValCount)] = val[eachValCount]
                     else:
-                        eachDataPoint["Decision"] = "Rejected"
+                        eachDataPoint["Decision"] = "Rejected Because of Bullet business rules"
+                elif ("Job Responsibilities" not in eachDataPoint.keys()):
+                    eachDataPoint["Decision"] = "Rejected because unable to identify Job Responsibilities"
+
+                elif ("Skills & Experience" not in eachDataPoint.keys()):
+                    eachDataPoint["Decision"] = "Rejected because unable to identify Skills & Experience"
+
                 else:
-                    eachDataPoint["Decision"] = "Rejected"
+                    eachDataPoint["Decision"] = "Rejected because unable to identify Job Responsibilities and Skills & Experience"
 
                 logging.info('--------- PUSHING DATA ---------------' + str(eachDataPoint['Id']))
 
