@@ -9,3 +9,5 @@ Job Ad Data Analysis - Keyword List.xlsx
 .idea/
 
 __pycache__/
+
+.DS_Store
