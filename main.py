@@ -166,6 +166,8 @@ def scrapeAcceptReject(tableName, counterLimit):
 
                 if (JobAddFilter.NumberChar(eachDataPoint['JobAdText'], 4000, 5000)):
                     eachDataPoint['JobAdText'] = JobAddFilter.removeIntroduction(eachDataPoint['JobAdText'])
+                    eachDataPoint['JobAdText'] = str(eachDataPoint['JobAdText'])
+
 
                 paragraphinformation = ParagraphFilters.countParagraph(eachDataPoint['JobAdText'])
                 if (paragraphinformation[0] >= 2) & (paragraphinformation[0] <= 4):
