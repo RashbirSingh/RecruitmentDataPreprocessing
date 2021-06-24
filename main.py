@@ -195,10 +195,11 @@ def scrapeAcceptReject(tableName, counterLimit):
                 if ("Job Responsibilities" in eachDataPoint.keys()) and ("Skills & Experience" in eachDataPoint.keys()):
                     if (len(eachDataPoint["Job Responsibilities"]) > 0) or (len(eachDataPoint["Skills & Experience"]) > 0):
                         eachDataPoint["Decision"] = "Accepted"
-                        # for eachValCount in range(len(val)):
-                        #     category = JobAddFilter.categoryChecker(val[eachValCount], key)
-                        #     eachDataPoint[key + "_" + str(eachValCount) + "_" + category] = val[eachValCount]
-                            # eachDataPoint[key + "_" + str(eachValCount)] = val[eachValCount]
+                        for key, val in sectionalDic.items():
+                            for eachValCount in range(len(val)):
+                                category = JobAddFilter.categoryChecker(val[eachValCount], key)
+                                eachDataPoint[key + "_" + str(eachValCount+1) + "_" + category] = val[eachValCount]
+                                # eachDataPoint[key + "_" + str(eachValCount)] = val[eachValCount]
                     else:
                         eachDataPoint["Decision"] = "Rejected Because of Bullet business rules"
                 elif ("Job Responsibilities" not in eachDataPoint.keys()):

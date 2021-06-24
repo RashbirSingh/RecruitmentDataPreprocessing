@@ -102,7 +102,8 @@ class jobAddFilter:
                                   "Key Activities", "key priorities", "what you'll be doing", "Key Duties",
                                   "Day to day", "About the role", "the role", "day in the life", "We’re looking for",
                                   "Essential Functions:", "Essential Functions",
-                                  "Job Summary", "What you’ll be doing:", "be doing"]],
+                                  "Job Summary", "What you’ll be doing:", "be doing", "Successful Candidate",
+                                  "What will I be doing"]],
         "Skills & Experience": [["Qualifications", "Skills", "Experience", "Education", "Profile",
                                  "Requirements", "background", "Possess", "License", "Desirable",
                                  "Qualification", "Skill", "Attributes", "Requirements:", "Required"],
@@ -116,7 +117,8 @@ class jobAddFilter:
                                  "Experience/skills required", "Required experience and skills",
                                  "What You Need To Succeed", "To be considered", "Experience / Requirements",
                                  "Desirable skills", "right person", "You must currently have", "must currently have",
-                                 "currently have", "Qualification/Skills", "Experience\nRequired", "Job Skills"]],
+                                 "currently have", "Qualification/Skills", "Experience\nRequired", "Job Skills",
+                                 "What are we looking for"]],
         "Benefits": [["Benefits"],
                      ["What you'll get", "We offer", "What's on offer", "Perks", "in it for you",
                       "What we are offering", "We’re offering", "we are offering"]]
@@ -144,7 +146,8 @@ class jobAddFilter:
         text = re.sub(r"(\w)([A-Z])", r"\1 \2", text)
         for key, val in keywordDic.items():
             for keyword in val[1]:
-                if len(text.lower().split(keyword.lower())) > 1:
+                if keyword.lower() in text.lower():
+                # if len(text.lower().split(keyword.lower())) > 1:
                     # print("(2)Splitting on: " + key + "-" + keyword)
                     sectionalDic[key] = text.lower().split(keyword.lower())[-1]
                     found = True
@@ -173,6 +176,13 @@ class jobAddFilter:
                                      .strip('·')
                                      .strip('!')
                                      .strip().capitalize() for eachVal in val]
+
+        if "Job Responsibilities" in sectionalDic.keys():
+            sectionalDic["Job Responsibilities"] = sectionalDic["Job Responsibilities"][:10]
+        if "Skills & Experience" in sectionalDic.keys():
+            sectionalDic["Skills & Experience"] = sectionalDic["Skills & Experience"][:10]
+        if "Benefits" in sectionalDic.keys():
+            sectionalDic["Benefits"] = sectionalDic["Benefits"][:5]
 
         return sectionalDic
 
@@ -216,9 +226,11 @@ class jobAddFilter:
                                                  "Key Activities", "key priorities", "what you'll be doing",
                                                  "Key Duties",
                                                  "Day to day", "About the role", "the role", "day in the life",
-                                                 "We’re looking for", "Essential Functions:", "Essential Functions",
-                                                 "Job Summary", "What you’ll be doing:", "be doing", "Qualifications",
-                                                 "Skills", "Experience", "Education", "Profile",
+                                                 "We’re looking for",
+                                                 "Essential Functions:", "Essential Functions",
+                                                 "Job Summary", "What you’ll be doing:", "be doing",
+                                                 "Successful Candidate", "What will I be doing",
+                                                 "Qualifications", "Skills", "Experience", "Education", "Profile",
                                                  "Requirements", "background", "Possess", "License", "Desirable",
                                                  "Qualification", "Skill", "Attributes", "Requirements:", "Required",
                                                  "Ideal Candidate", "success in the role", "must have", "Who you are",
@@ -237,7 +249,7 @@ class jobAddFilter:
                                                  "Desirable skills", "right person", "You must currently have",
                                                  "must currently have",
                                                  "currently have", "Qualification/Skills", "Experience\nRequired",
-                                                 "Job Skills"]):
+                                                 "Job Skills", "What are we looking for"]):
 
         for keyword in keywords:
             splittext = text.lower().split(keyword.lower())
