@@ -118,7 +118,7 @@ class jobAddFilter:
                                  "What You Need To Succeed", "To be considered", "Experience / Requirements",
                                  "Desirable skills", "right person", "You must currently have", "must currently have",
                                  "currently have", "Qualification/Skills", "Experience\nRequired", "Job Skills",
-                                 "What are we looking for"]],
+                                 "What are we looking for", "Experience / Requirements"]],
         "Benefits": [["Benefits"],
                      ["What you'll get", "We offer", "What's on offer", "Perks", "in it for you",
                       "What we are offering", "We’re offering", "we are offering"]]
@@ -201,7 +201,7 @@ class jobAddFilter:
             the category from which the keywords comes from
 
         fileName : str
-            keywords.csv (Default) CSV file with list of ketwords to identify and their category
+            keywords.csv (Default) CSV file with list of keywords to identify and their category
 
         Returns
         -------
@@ -209,15 +209,31 @@ class jobAddFilter:
         """
 
         keywordsDataFrame = pd.read_csv(fileName)
-        for keyword in keywordsDataFrame.Keywords.values:
-            if keyword.lower() in text.lower():
-                return (keywordsDataFrame.loc[keywordsDataFrame.Keywords == keyword, "Categorisation"].values[0])
-            else:
-                if key == "Job Responsibilities":
-                    return "A"
-                elif key == "Benefits":
-                    return "I"
-                return ("")
+
+        if key == "Job Responsibilities":
+            return "A"
+        elif key == "Benefits":
+            return "I"
+
+        elif key == "Skills & Experience":
+            for keyword in keywordsDataFrame.Keywords.values:
+                if keyword.lower() in text.lower():
+                    charCat = keywordsDataFrame.loc[(keywordsDataFrame.Keywords.str.lower() == keyword.lower()) & ((keywordsDataFrame.loc[:, "Section Heading"] == "Skills & Experience") |
+                                                                     (keywordsDataFrame.loc[:, "Section Heading"] == "Education Level") |
+                                                                     (keywordsDataFrame.loc[:, "Section Heading"] == "Amount of Experience") |
+                                                                     (keywordsDataFrame.loc[:, "Section Heading"] == "Licenses/Tickets") |
+                                                                     (keywordsDataFrame.loc[:, "Section Heading"] == "Programs") |
+                                                                     (keywordsDataFrame.loc[:, "Section Heading"] == "Checks/Trainings") |
+                                                                     (keywordsDataFrame.loc[:, "Section Heading"] == "Working Rights")), "Categorisation"]
+                    if len(charCat) > 0:
+                        return (charCat.values[0])
+
+                    else:
+                        return 'B'
+        else:
+            return 'B'
+
+        return ("B")
 
     def removeIntroduction(self, text, keywords=["Responsibilities", "Responsible", "Description", "Day-to-day",
                                                  "Tasks", "Duties", "Functions", "accountabilities",
@@ -249,9 +265,12 @@ class jobAddFilter:
                                                  "Desirable skills", "right person", "You must currently have",
                                                  "must currently have",
                                                  "currently have", "Qualification/Skills", "Experience\nRequired",
-                                                 "Job Skills", "What are we looking for"]):
+                                                 "Job Skills", "What are we looking for", "Experience / Requirements"]):
 
         for keyword in keywords:
             splittext = text.lower().split(keyword.lower())
         if len(splittext) > 1:
             return splittext[-1]
+
+
+

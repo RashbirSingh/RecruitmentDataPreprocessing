@@ -16,13 +16,6 @@ Benefits,What's on offer,I
 Benefits,Perks,I
 Benefits,in it for you,I
 Benefits,What we are offering,I
-Skills & Experience,General,B
-Skills & Experience,Amount of Experience,C
-Skills & Experience,Education,D
-Skills & Experience,Licenses/Tickets,E
-Skills & Experience,Programs,F
-Skills & Experience,Checks/Trainings,G
-Skills & Experience,Working Rights,H
 Amount of Experience,Years,C
 Amount of Experience,Years',C
 Amount of Experience,Yrs,C
@@ -33,6 +26,7 @@ Amount of Experience,Min,C
 Amount of Experience,Min.,C
 Amount of Experience,Minimum,C
 Amount of Experience,At least,C
+Amount of Experience,experience,C
 Education Level,PhD,D
 Education Level,Doctorate,D
 Education Level,Doctorate,D
@@ -50,7 +44,6 @@ Education Level,Diploma,D
 Education Level,Undergraduate,D
 Education Level,Undergrad,D
 Education Level,BSc,D
-Education Level,BA,D
 Education Level,Bachelor,D
 Education Level,Bachelors,D
 Education Level,Bachelor's,D
@@ -88,7 +81,7 @@ Programs,Abode,F
 Programs,Photoshop,F
 Programs,Illustrator,F
 Programs,Python,F
-Programs,C,F
+Programs, C ,F
 Programs,C#,F
 Programs,Java,F
 Programs,JavaScript,F
@@ -103,6 +96,9 @@ Programs,Ruby,F
 Programs,Matlab,F
 Programs,Latex,F
 Programs,Tableau,F
+Programs,Excel,F
+Programs,PowerPoint,F
+Programs,Power Point,F
 Checks/Trainings,Check,G
 Checks/Trainings,Permit,G
 Checks/Trainings,Working with Children Certificate,G
@@ -114,4 +110,4 @@ Checks/Trainings,Anaphylaxis,G
 Checks/Trainings,CPR,G
 Working Rights,Working Rights,H
 Working Rights,Australian Citizen,H
-Working Rights,PR,H
+Working Rights, PR ,H

@@ -93,7 +93,9 @@ class bulletFilter:
         return sectionalDic
 
     def otherCleaning(self, sectionalDic,
-                      textList=["apply now", "www", "apply online", "apply today", "click below", "below", "CV"]):
+                      textList=["apply now", "www", "apply online", "apply today", "click below", "below", "CV", "What we are looking for",
+                                "The role as minimum would require you to", "P os it io n r eq ui re me nt s", 'E ss en ti al d ut ie s a nd r es po ns ib il it ie s include the following',
+                                'Your duties will include, but are not limited to']):
 
         for key, val in sectionalDic.items():
             valulist = list()
