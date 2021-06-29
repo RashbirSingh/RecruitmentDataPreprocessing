@@ -38,12 +38,12 @@ Education Level,Postgraduate,D
 Education Level,Masters,D
 Education Level,Master's,D
 Education Level,MSc,D
-Education Level,MA,D
+Education Level, MA ,D
 Education Level,Degree,D
 Education Level,Diploma,D
 Education Level,Undergraduate,D
 Education Level,Undergrad,D
-Education Level,BSc,D
+Education Level, BSc ,D
 Education Level,Bachelor,D
 Education Level,Bachelors,D
 Education Level,Bachelor's,D
@@ -54,9 +54,9 @@ Education Level,Certified,D
 Education Level,Qualifications,D
 Education Level,Qualification,D
 Education Level,Qualified in,D
-Education Level,Level,D
+Education Level, Level ,D
 Education Level,Chartered Accountant,D
-Licenses/Tickets,Ticket,E
+Licenses/Tickets, Ticket ,E
 Licenses/Tickets,Tickets,E
 Licenses/Tickets,Card,E
 Licenses/Tickets,Cards,E
@@ -99,9 +99,150 @@ Programs,Tableau,F
 Programs,Excel,F
 Programs,PowerPoint,F
 Programs,Power Point,F
+Programs,Bootstrap,F
+Programs,JQuery,F
+Programs,CSS,F
+Programs,Anaconda,F
+Programs,PyCharm,F
+Programs,Pandas,F
+Programs,Data Analysis,F
+Programs,Dask,F
+Programs,Artificial Intelligence,F
+Programs, AI ,F
+Programs,Linux,F
+Programs,Windows,F
+Programs,Ubuntu,F
+Programs,Web Scrapping,F
+Programs,Data Wrangling,F
+Programs, R ,F
+Programs,Numpy,F
+Programs,Sklearn,F
+Programs,Machine Learning,F
+Programs,Neural Network,F
+Programs,Deep Learning,F
+Programs,Reinforcment Learning,F
+Programs,Arduino,F
+Programs,Raspberry Pi,F
+Programs,AWS,F
+Programs,Network,F
+Programs,Cyber,F
+Programs,AWS,F
+Programs,Django,F
+Programs,Flask,F
+Programs,Docker,F
+Programs,Kubernetes,F
+Programs,Big Data,F
+Programs,Spark,F
+Programs,Natural Language Processing,F
+Programs,NLP,F
+Programs,IoT,F
+Programs,Internt of Things,F
+Programs,Developer,F
+Programs,Junir Developer,F
+Programs,OSX,F
+Programs, ML ,F
+Programs,DevOps,F
+Programs,Wordpress,F
+Programs,Bash,F
+Programs,Pyspark,F
+Programs,Data Modeling,F
+Programs,Image Processing,F
+Programs,OpenCV,F
+Programs,Visualisation,F
+Programs,Computer Vision,F
+Programs,Algorithm,F
+Programs,Algorithms,F
+Programs,Data Science,F
+Programs,Mathematics,F
+Programs,Software,F
+Programs,Programming,F
+Programs,Data Mining,F
+Programs,Android Studio,F
+Programs,Android,F
+Programs,Scikit-Learn,F
+Programs,Classification,F
+Programs,Regression,F
+Programs,Clustering,F
+Programs,Infographics,F
+Programs,API,F
+Programs,APIs,F
+Programs,HDFS,F
+Programs,MapReduce,F
+Programs,Apache Spark,F
+Programs,Algorithms,F
+Programs,Data,F
+Programs,PowerBI,F
+Programs,Tableau,F
+Programs,Looker,F
+Programs,Colab,F
+Programs,A/B Testing,F
+Programs,Data Engineer,F
+Programs,GIT,F
+Programs,GitHub,F
+Programs,Jupyter,F
+Programs,BlockChain,F
+Programs,Visualisation Libraries,F
+Programs,testing,F
+Programs,statistics,F
+Programs,Google cloud,F
+Programs,cloud,F
+Programs,MySQl,F
+Programs,GCP,F
+Programs,Azure,F
+Programs,Google,F
+Programs,Amazon,F
+Programs,Unix,F
+Programs,Kafka,F
+Programs,Cassandra,F
+Programs,Tomcat,F
+Programs,Terraform,F
+Programs,VueJS,F
+Programs,Postgres,F
+Programs,React,F
+Programs,TypeScript,F
+Programs,OpenAPI,F
+Programs,Gitlab,F
+Programs,Golang,F
+Programs,CaaS,F
+Programs,SaaS,F
+Programs,Airflow,F
+Programs,Dataflow,F
+Programs,BigQuery,F
+Programs,DataFusion,F
+Programs,CloudSQL,F
+Programs,cloud,F
+Programs,wrangling,F
+Programs,Scala,F
+Programs,Snowflake,F
+Programs,NoSQL,F
+Programs,Jenkins,F
+Programs,Scrum,F
+Programs,Agile,F
+Programs,Hacking,F
+Programs,UX,F
+Programs,UI,F
+Programs,Rust,F
+Programs,JS,F
+Programs,QA,F
+Programs,IT,F
+Programs,Full Stack,F
+Programs,S3,F
+Programs,Redshift,F
+Programs,MongoDB,F
+Programs,Firebase,F
+Programs,DynamoDB,F
+Programs,DB2,F
+Programs,Redis,F
+Programs,Kinesis,F
+Programs,Lambda,F
+Programs,Athena,F
+Programs,Angular,F
+Programs,Vue,F
+Programs,Microsoft,F
 Checks/Trainings,Check,G
 Checks/Trainings,Permit,G
 Checks/Trainings,Working with Children Certificate,G
+Checks/Trainings,WWCC,G
 Checks/Trainings,Police Check,G
 Checks/Trainings,First-aid Certificate,G
 Checks/Trainings,First aid certificate,G
@@ -111,3 +252,4 @@ Checks/Trainings,CPR,G
 Working Rights,Working Rights,H
 Working Rights,Australian Citizen,H
 Working Rights, PR ,H
+Working Rights,Permanent Residency,H
