@@ -2,10 +2,12 @@ import pyodbc
 import boto3
 import os
 import sys
+from dotenv import dotenv_values
 
-os.environ["aws_access_key_id"] = "AKIA6I4GCS6TF2GSHNUJ"
-os.environ["aws_secret_access_key"] = "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"
-os.environ["region_name"] = 'ap-southeast-1'
+config = dotenv_values(".env")
+os.environ["aws_access_key_id"] = config["aws_access_key_id"]
+os.environ["aws_secret_access_key"] = config["aws_secret_access_key"]
+os.environ["region_name"] = config["region_name"]
 
 conn = pyodbc.connect('Driver={SQL Server};'
                       'Server=ARES66;'
