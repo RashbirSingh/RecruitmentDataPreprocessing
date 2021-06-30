@@ -25,6 +25,7 @@ def pushScript(limit):
 
 
         count = count + 1
+        print(count)
         if count < limit :
             continue
         else:
